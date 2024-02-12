@@ -21,5 +21,8 @@ export class UsuarioService {
     return signOut(this.auth);
   }
 
+  obtenerUsuarioActual(){
+    return this.auth.currentUser;
+  }
   
 }

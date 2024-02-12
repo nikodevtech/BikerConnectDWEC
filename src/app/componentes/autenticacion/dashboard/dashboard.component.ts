@@ -1,5 +1,7 @@
+import { BaseDatosService } from './../../../servicios/base-datos.service';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Usuario } from 'src/app/modelo/usuario';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
 
 @Component({
@@ -8,19 +10,22 @@ import { UsuarioService } from 'src/app/servicios/usuario.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent {
+
+  emailUsuarioActual: string | undefined | null;
+  usuarioActual: Usuario | undefined;
+  
   constructor(
-    private usuarioService: UsuarioService,
-    private router: Router
+    private usuarioServicio: UsuarioService,
+    private router: Router,
+    private baseDatosServicio: BaseDatosService
   ) { }
 
   ngOnInit(): void {
+   this.emailUsuarioActual = this.usuarioServicio.obtenerUsuarioActual()?.email;
+   this.baseDatosServicio.obtenerPorFiltro("usuarios", "email", this.emailUsuarioActual).subscribe(
+    (data) => {
+      this.usuarioActual = data[0];
+    });
   }
 
-  onClick() {
-    this.usuarioService.logout()
-      .then(() => {
-        this.router.navigate(['/registrar']);
-      })
-      .catch(error => console.log(error));
-  }
 }

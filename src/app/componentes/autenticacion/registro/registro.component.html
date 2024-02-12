@@ -63,6 +63,6 @@
           required
         />
       </div>
-      <button type="submit" value="Enviar" id="btnRegistro" class="btn btn-primary mt-5"><i class="bi bi-person-add fs-5"> Crear cuenta</i></button>
+      <button type="submit" value="Enviar" id="btnRegistro" class="btn btn-primary mt-5" [disabled]="!formularioRegistro.valid"><i class="bi bi-person-add fs-5" > Crear cuenta</i></button>
     </form>
   </div>

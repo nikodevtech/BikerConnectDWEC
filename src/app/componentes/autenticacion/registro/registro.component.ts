@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Usuario } from 'src/app/modelo/usuario';
 import { BaseDatosService } from 'src/app/servicios/base-datos.service';
@@ -22,15 +22,16 @@ export class RegistroComponent {
     private notificacionesServicio :NotificacionesService
   ) {
     this.formularioRegistro = new FormGroup({
-      email: new FormControl(),
-      password: new FormControl(),
-      nombre: new FormControl(),
-      apellidos: new FormControl(),
-      telefono: new FormControl()
+      email: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required),
+      nombre: new FormControl('', Validators.required),
+      apellidos: new FormControl('', Validators.required),
+      telefono: new FormControl('', Validators.required)
     })
   }
 
   onSubmit() {
+    
     this.usuarioServicio.registrar(this.formularioRegistro.value)
       .then(response => {
         console.log(response);
@@ -44,6 +45,8 @@ export class RegistroComponent {
           this.notificacionesServicio.mostrarNotificacion('El correo electrónico ya registrado', 'La cuenta de correo electrónico ya está en uso', 'error');
         } else if(error.code === 'auth/invalid-email'){
           this.notificacionesServicio.mostrarNotificacion('Email incorrecto', 'El email introducido no es valido', 'error');
+        } else if(error.code === 'auth/missing-password'){
+          this.notificacionesServicio.mostrarNotificacion('Introduzca una contraseña', 'Proporcione una contraseña para el registro', 'error');
         } else {  
           console.log('Error de Firebase:', error);
         }
@@ -58,7 +61,8 @@ export class RegistroComponent {
       email: this.formularioRegistro.value.email,
       telefono: this.formularioRegistro.value.telefono,
       password: this.formularioRegistro.value.password,
-      rol: 'ROLE_USER'
+      rol: 'ROLE_USER',
+      fechaRegistro: new Date(),
     }
     this.baseDatosService.insertar('usuarios', usuario).then(() => {
       this.notificacionesServicio.mostrarNotificacion('Registro compleado con exito', 'Su cuenta ha sido creada, ahora puede iniciar sesión.', 'success');

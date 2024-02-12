@@ -73,16 +73,17 @@ h1 {
 }
 
 .subtituloPrincipal {
-  font-family: 'Kalam', cursive;
-  font-size: 4.5rem; 
-  color: #1f3c85; 
-  text-shadow: 3px 3px 8px rgba(255, 255, 255, 0.8); 
+	font-family: 'Kalam', cursive;
+	font-size: 4.5rem;
+	color: #1f3c85;
+	text-shadow: 3px 3px 8px rgba(255, 255, 255, 0.8);
 }
+
 .subtituloPrincipal2 {
-  font-family: 'Kalam', cursive;
-  font-size: 4.5rem; 
-  color: #5993d3; 
-  text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.8); 
+	font-family: 'Kalam', cursive;
+	font-size: 4.5rem;
+	color: #5993d3;
+	text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.8);
 }
 
 .subtituloSecundario2 {
@@ -109,9 +110,10 @@ h1 {
 	margin-top: 10px;
 	margin-bottom: 10px;
 }
-.tableCustom{
- background-color: #1f3c85 !important;
- color: white !important;	
+
+.tableCustom {
+	background-color: #1f3c85 !important;
+	color: white !important;
 }
 
 .listaLogin {
@@ -125,7 +127,7 @@ h1 {
 }
 
 .textoPrincipal {
-	color: #1f3c85 ;
+	color: #1f3c85;
 }
 
 .buttonPrincipal {
@@ -144,7 +146,7 @@ h1 {
 }
 
 .dashboardCard {
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8); 
+	box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
 }
 
 .custom-checkbox {
@@ -153,37 +155,46 @@ h1 {
 	cursor: pointer;
 	margin-left: 5px;
 	margin-top: 5px;
-    transform: scale(2); /* Ajusta el valor según el tamaño deseado */
+	transform: scale(2);
 }
-.cardMoto{
+
+.cardMoto {
 	border: 1.5px solid #1f3c85;
 	border-radius: 20px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 	background-color: #E8E8E8;
 	color: #1f3c85;
 }
+
 nav {
-	position: fixed !important;	
-	z-index: 1000; /* Puedes ajustar el valor según sea necesario */
+	position: fixed !important;
+	z-index: 1000;
 }
-.cardPrincipal{
- 	margin-top: 80px;
+
+.cardPrincipal {
+	margin-top: 80px;
 }
-.cardAdminUser{
+
+.cardAdminUser {
 	margin-bottom: 120px;
 }
+
 .vg-footer {
-  display: block;
-  margin: 0;
-  padding: 25px 0;
-  color: white;
-  width: 100%;
-  position: fixed;
-  bottom: 0;
-  left: 0;
+	display: block;
+	margin: 0;
+	padding: 25px 0;
+	color: white;
+	width: 100%;
+	position: fixed;
+	bottom: 0;
+	left: 0;
 }
 
 .footer-p {
 	font-family: 'Kalam', cursive;
 }
 
+button:disabled {
+	background-color: #ccc !important;
+	cursor: not-allowed;
+}
