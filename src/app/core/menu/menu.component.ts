@@ -19,6 +19,9 @@ export class MenuComponent {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.componenteActual = this.router.url.split('/')[1];
+        if(this.router.url.split('/')[2] !== undefined){
+          this.componenteActual = this.router.url.split('/')[1] + '/' + this.router.url.split('/')[2];
+        }
       }
     });
   }

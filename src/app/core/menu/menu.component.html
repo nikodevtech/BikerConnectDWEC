@@ -8,18 +8,18 @@
         <div class="collapse navbar-collapse ms-3" id="navbarSupportedContent">
             <ul class="navbar-nav me-5 ms-auto">
                 <li class="nav-item me-3" *ngIf="componenteActual === ''">
-                    <a class="nav-link fw-bold text-white" routerLink="/login"><i class="bi bi-box-arrow-in-right fs-5"> Iniciar sesión</i></a>
+                    <a class="nav-link fw-bold text-white" routerLink="/autenticacion/login"><i class="bi bi-box-arrow-in-right fs-5"> Iniciar sesión</i></a>
                 </li>
                 <li class="nav-item me-3" *ngIf="componenteActual === ''">
-                    <a class="nav-link fw-bold text-white" routerLink="/registrar"><i class="bi bi-person-add fs-5"> Crear cuenta</i></a>
+                    <a class="nav-link fw-bold text-white" routerLink="/autenticacion/registrar"><i class="bi bi-person-add fs-5"> Crear cuenta</i></a>
                 </li>
-                <li class="nav-item me-3" *ngIf="componenteActual === 'login'">
-                    <a class="nav-link fw-bold text-white" routerLink="/registrar"><i class="bi bi-person-add fs-5"> Crear cuenta</i></a>
+                <li class="nav-item me-3" *ngIf="componenteActual === 'autenticacion/login'">
+                    <a class="nav-link fw-bold text-white" routerLink="/autenticacion/registrar"><i class="bi bi-person-add fs-5"> Crear cuenta</i></a>
                 </li>
-                <li class="nav-item me-3" *ngIf="componenteActual === 'registrar'">
-                    <a class="nav-link fw-bold text-white" routerLink="/login"><i class="bi bi-box-arrow-in-right fs-5"> Iniciar sesión</i></a>
+                <li class="nav-item me-3" *ngIf="componenteActual === 'autenticacion/registrar'">
+                    <a class="nav-link fw-bold text-white" routerLink="/autenticacion/login"><i class="bi bi-box-arrow-in-right fs-5"> Iniciar sesión</i></a>
                 </li>
-                <li class="nav-item me-3" *ngIf="componenteActual === 'dashboard'">
+                <li class="nav-item me-3" *ngIf="componenteActual === 'autenticacion/dashboard'">
                     <button type="button" class="btn buttonPrincipal" (click)="onClick()"><i class="bi bi-box-arrow-in-left"> Cerrar sesión</i></button>
                 </li>               
             </ul>

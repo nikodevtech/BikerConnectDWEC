@@ -10,7 +10,7 @@ export class NotificacionesService {
   constructor(private _baseDatosService: BaseDatosService) { }
 
 /**
-  * Muestra una notificación de éxito para el registro de un elemento.
+  * Muestra una ventana modal de notificación para el usuario.
  * @param titulo titulo del modal
  * @param mensaje mensaje que se muestra en el cuerpo del modal
  * @param tipo tipo del modal a mostrar
