@@ -69,7 +69,6 @@ export class BaseDatosService {
   /**
    * Modifica un documento de una colección determinada
    * @param coleccion de la base de datos que se va a modificar
-   * @param id del documento que se va a modificar
    * @param documento modificado para ser actualizado
    * @returns una promesa
    */

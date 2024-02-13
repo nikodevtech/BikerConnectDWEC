@@ -26,7 +26,7 @@ export class RegistroComponent {
       password: new FormControl('', Validators.required),
       nombre: new FormControl('', Validators.required),
       apellidos: new FormControl('', Validators.required),
-      telefono: new FormControl('', Validators.required)
+      telefono: new FormControl('', Validators.required),
     })
   }
 

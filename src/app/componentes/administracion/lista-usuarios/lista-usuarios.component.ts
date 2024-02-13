@@ -30,7 +30,7 @@ export class ListaUsuariosComponent {
       });
     });
   }
-  convertirTimestampADate(timestamp: any): Date {
+  private convertirTimestampADate(timestamp: any): Date {
     return timestamp.toDate();
   }
   eliminarUsuario(id: string, email: string) {

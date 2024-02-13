@@ -195,6 +195,6 @@ nav {
 }
 
 button:disabled {
-	background-color: #ccc !important;
+	background-color: #999999 !important;
 	cursor: not-allowed;
 }
