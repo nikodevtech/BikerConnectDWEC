@@ -2,6 +2,7 @@ import { Usuario } from 'src/app/modelo/usuario';
 import { BaseDatosService } from './../../../servicios/base-datos.service';
 import { Component } from '@angular/core';
 import { NotificacionesService } from 'src/app/servicios/notificaciones.service';
+import { UsuarioService } from 'src/app/servicios/usuario.service';
 
 @Component({
   selector: 'app-lista-usuarios',
@@ -13,7 +14,8 @@ export class ListaUsuariosComponent {
 
   constructor(
     private notificacionesServicio: NotificacionesService,
-    private baseDatosServicio: BaseDatosService
+    private baseDatosServicio: BaseDatosService,
+    private usuarioServicio: UsuarioService
   ) {}
 
   ngOnInit(): void {
@@ -40,5 +42,6 @@ export class ListaUsuariosComponent {
       'usuario',
       'usuarios'
     );
+    this.usuarioServicio.borrarUsuario(this.usuarios.find(user => user.id === id)!);
   }
 }
