@@ -1,3 +1,5 @@
+import { Moto } from "./moto";
+
 export interface Usuario {
     id?: string;
     email: string;
@@ -7,4 +9,5 @@ export interface Usuario {
     telefono: string;
     rol?: string;
     fechaRegistro?: Date;
+    misMotos?: Moto[];
 }

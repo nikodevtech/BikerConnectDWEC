@@ -11,7 +11,7 @@ const routes: Routes = [
     { 
       path: 'dashboard', 
       component: DashboardComponent, 
-      ...canActivate(()=> redirectUnauthorizedTo(['/registrar']))
+      ...canActivate(()=> redirectUnauthorizedTo(['/autenticacion/registrar']))
     },
     { path: 'registrar', component: RegistroComponent },
     { path: 'login', component: LoginComponent},
