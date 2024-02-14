@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Usuario } from 'src/app/modelo/usuario';
 import { BaseDatosService } from 'src/app/servicios/base-datos.service';
 import { NotificacionesService } from 'src/app/servicios/notificaciones.service';
@@ -14,12 +14,14 @@ import { UsuarioService } from 'src/app/servicios/usuario.service';
 export class RegistroComponent {
 
   formularioRegistro: FormGroup;
+  tipoRegistro: string = '';
 
   constructor(
     private usuarioServicio: UsuarioService,
     private router: Router,
     private baseDatosService: BaseDatosService,
-    private notificacionesServicio :NotificacionesService
+    private notificacionesServicio :NotificacionesService,
+    private route: ActivatedRoute
   ) {
     this.formularioRegistro = new FormGroup({
       email: new FormControl('', Validators.required),
@@ -28,6 +30,12 @@ export class RegistroComponent {
       apellidos: new FormControl('', Validators.required),
       telefono: new FormControl('', Validators.required),
     })
+  }
+
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      this.tipoRegistro = params['from'] || ''; 
+    });
   }
 
   onSubmit() {
@@ -52,6 +60,8 @@ export class RegistroComponent {
         }
       });
 
+      
+
   }
   
   insertarUserEnFirebase(){
@@ -65,8 +75,13 @@ export class RegistroComponent {
       fechaRegistro: new Date(),
     }
     this.baseDatosService.insertar('usuarios', usuario).then(() => {
-      this.notificacionesServicio.mostrarNotificacion('Registro compleado con exito', 'Su cuenta ha sido creada, ahora puede iniciar sesión.', 'success');
-      this.router.navigate(['/autenticacion/login']);
+      if (this.tipoRegistro === 'admin') {
+        this.notificacionesServicio.mostrarNotificacion('Registro completado con exito', 'Cuenta creada, el usuari puede hacer uso de ella.', 'success');
+        this.router.navigate(['/administracion/listado-usuarios']);
+      } else {
+        this.notificacionesServicio.mostrarNotificacion('Registro completado con exito', 'Su cuenta ha sido creada, ahora puede iniciar sesión.', 'success');
+        this.router.navigate(['/autenticacion/login']);
+      }
     })
     .catch((error) => {
       console.log(error);

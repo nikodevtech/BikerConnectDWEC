@@ -5,9 +5,9 @@
     <div class="card-body">
         <div class="row">
             <div class="col-md-6">
-                <a routerLink="/autenticacion/registrar" role="button" class="btn buttonPrincipal p-2 mb-3">
+                <button (click)="navegarARegistro()" class="btn buttonPrincipal p-2 mb-3" role="button">
                     <i class="bi bi-person-add p-2 fs-5"> Registrar usuario</i>
-                </a>
+                </button>                  
             </div>
             <div class="col-md-6 text-end mt-2">
 <!--                 <form (ngSubmit)="buscarUsuarios()" #searchForm="ngForm">

@@ -31,6 +31,7 @@ export class LoginComponent {
     this.usuarioService.login(this.formularioLogin.value)
       .then(response => {
         console.log(response);
+        this.notificacionesServicio.mostrarNotificacion('Inicio de sesión correcto', 'Bienvenido a BikerConnect', 'success');
         this.router.navigate(['/autenticacion/dashboard']);
       })
       .catch(error => {

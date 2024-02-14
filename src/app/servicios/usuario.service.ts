@@ -31,10 +31,10 @@ export class UsuarioService {
       const user = response.user; 
       if (user) {
         await deleteUser(user); 
-        console.log("Usuario eliminado correctamente de la autenticación de firebase.");
+        console.log("Usuario eliminado correctamente de Auth firebase.");
       }
     } catch (error) {
-      console.error("Error al eliminar usuario de la autenticación de firebase:", error);
+      console.error("Error al eliminar usuario de de Auth firebase:", error);
     }
   }
   

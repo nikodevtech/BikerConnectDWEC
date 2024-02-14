@@ -3,6 +3,7 @@ import { BaseDatosService } from './../../../servicios/base-datos.service';
 import { Component } from '@angular/core';
 import { NotificacionesService } from 'src/app/servicios/notificaciones.service';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lista-usuarios',
@@ -10,12 +11,13 @@ import { UsuarioService } from 'src/app/servicios/usuario.service';
   styleUrls: ['./lista-usuarios.component.css'],
 })
 export class ListaUsuariosComponent {
+  
   usuarios: Usuario[] = [];
 
   constructor(
     private notificacionesServicio: NotificacionesService,
     private baseDatosServicio: BaseDatosService,
-    private usuarioServicio: UsuarioService
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -23,25 +25,44 @@ export class ListaUsuariosComponent {
   }
 
   obtenerUsuarios() {
-    this.baseDatosServicio.obtenerTodos('usuarios').subscribe((usuarios: Usuario[]) => {
-      this.usuarios = usuarios.map(usuario => {
-        return {
-          ...usuario,
-          fechaRegistro: this.convertirTimestampADate(usuario.fechaRegistro)
-        };
+    this.baseDatosServicio
+      .obtenerTodos('usuarios')
+      .subscribe((usuarios: Usuario[]) => {
+        this.usuarios = usuarios.map((usuario) => {
+          return {
+            ...usuario,
+            fechaRegistro: this.convertirTimestampADate(usuario.fechaRegistro),
+          };
+        });
       });
-    });
   }
   private convertirTimestampADate(timestamp: any): Date {
     return timestamp.toDate();
   }
   eliminarUsuario(id: string, email: string) {
+
+    const usuarioAeliminar: Usuario = this.usuarios.find(
+      (user) => user.id === id
+    )!;
+
+    if(usuarioAeliminar.rol === 'ROLE_ADMIN'){
+      this.notificacionesServicio.mostrarNotificacion(
+        'Error al eliminar cuenta de usuario',
+        'No se puede eliminar un usuario con privilegios de administrador',
+        'error'
+      )
+      return;
+    }
+
     this.notificacionesServicio.confirmarEliminar(
       id,
       email,
       'usuario',
-      'usuarios'
+      'usuarios',
+      usuarioAeliminar
     );
-    this.usuarioServicio.borrarUsuario(this.usuarios.find(user => user.id === id)!);
+  }
+  navegarARegistro() {
+    this.router.navigate(['/autenticacion/registrar'], { queryParams: { from: 'admin' } });
   }
 }

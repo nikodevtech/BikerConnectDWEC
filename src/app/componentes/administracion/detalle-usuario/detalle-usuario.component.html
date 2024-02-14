@@ -23,17 +23,18 @@
       <label for="telefono" class="form-label textoPrincipal">Teléfono</label>
       <input type="tel" id="telefono" name="telefono" formControlName="telefono" class="form-control" required />
     </div>
-    <div class="mb-3 mt-3" *ngIf="usuario?.rol == 'ROLE_USER'">
+    <div class="mb-3 mt-3">
       <label for="rol" class="form-label textoPrincipal">Rol del usuario (Solamente se permite escalar privilegios)</label>
-      <select id="rol" name="rol" class="form-select" required>
-        <option value="ROLE_USER" [selected]="usuario?.rol == 'ROLE_USER'">Usuario</option>
-        <option value="ROLE_ADMIN">Administrador</option>
-      </select>
-    </div>
-    <div class="mb-3 mt-3" *ngIf="usuario?.rol == 'ROLE_ADMIN'">
-      <label for="rol" class="form-label textoPrincipal">Rol del usuario (Solamente se permite escalar privilegios)</label>
-      <input type="text" name="rol" value="Administrador" class="form-control" readonly>
-    </div>
+      <ng-container *ngIf="usuario?.rol === 'ROLE_USER'">
+        <select id="rol" name="rol" class="form-select" formControlName="rol" required>
+          <option value="ROLE_USER">Usuario</option>
+          <option value="ROLE_ADMIN">Administrador</option>
+        </select>
+      </ng-container>
+      <ng-container *ngIf="usuario?.rol === 'ROLE_ADMIN'">
+        <input type="text" name="rol" value="Administrador" class="form-control" readonly>
+      </ng-container>
+    </div>    
     <button type="submit" class="btn btn-primary mt-5">
       <i class="bi bi-person-fill-gear fs-5"> Guardar cambios</i>
     </button>
