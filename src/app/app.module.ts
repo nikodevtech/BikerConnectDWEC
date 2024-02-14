@@ -11,6 +11,7 @@ import { environment } from 'src/environments/environment';
 import { MenuComponent } from './core/menu/menu.component';
 import { BienvenidaComponent } from './core/bienvenida/bienvenida.component';
 import { FooterComponent } from './core/footer/footer.component';
+import { guardAdministracionGuard } from './guards/guard-administracion.guard';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +27,7 @@ import { FooterComponent } from './core/footer/footer.component';
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
   ],
-  providers: [],
+  providers: [guardAdministracionGuard], 
   bootstrap: [AppComponent]
 })
 export class AppModule { }

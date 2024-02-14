@@ -1,0 +1,74 @@
+<div class="registro cardPrincipal">
+    <form class="custom-form" (ngSubmit)="submitForm()">
+      <h2 class="text-center mb-5"><i class="bi bi-bicycle" style="color: #1f3c85;"> Registro nueva moto</i></h2>
+      <input type="hidden" [value]="idPropietario" />
+  
+      <div class="mb-3">
+        <label for="marca" class="form-label textoPrincipal">Marca</label>
+        <input
+          type="text"
+          id="marca"
+          name="marca"
+          class="form-control"
+          placeholder="Introduzca la marca"
+          [(ngModel)]="moto.marca"
+          required
+        />
+      </div>
+  
+      <div class="mb-3">
+        <label for="modelo" class="form-label textoPrincipal">Modelo</label>
+        <input
+          type="text"
+          id="modelo"
+          name="modelo"
+          class="form-control"
+          placeholder="Introduzca el modelo"
+          [(ngModel)]="moto.modelo"
+          required
+        />
+      </div>
+  
+      <div class="mb-3">
+        <label for="color" class="form-label textoPrincipal">Color</label>
+        <input
+          type="text"
+          id="color"
+          name="color"
+          class="form-control"
+          placeholder="Introduzca el color"
+          [(ngModel)]="moto.color"
+          required
+        />
+      </div>
+  
+      <div class="mb-3">
+        <label for="año" class="form-label textoPrincipal">Año fabricación</label>
+        <input
+          type="number"
+          id="año"
+          name="año"
+          min="1900"
+          class="form-control"
+          placeholder="Introduzca el año de fabricación"
+          [(ngModel)]="moto.anyo"
+          required
+        />
+      </div>
+  
+      <div class="mb-3">
+        <label for="descModificaciones" class="form-label textoPrincipal">Descripción</label>
+        <input
+          type="text"
+          id="descModificaciones"
+          name="descModificaciones"
+          class="form-control"
+          placeholder="Introduzca descripción de las modificaciones"
+          [(ngModel)]="moto.descModificaciones"
+          required
+        />
+      </div> 
+      <button type="submit" class="btn btn-primary mt-5"><i class="bi bi-plus-square fs-5"> Alta moto</i></button>
+    </form>
+  </div>
+  

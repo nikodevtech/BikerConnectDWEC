@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { UsuarioService } from 'src/app/servicios/usuario.service';
+import { NotificacionesService } from 'src/app/servicios/notificaciones.service';
 
 @Component({
   selector: 'app-menu',
@@ -12,7 +12,8 @@ export class MenuComponent {
   componenteActual: string | undefined;
 
   constructor(
-    private usuarioService: UsuarioService, private router: Router
+    private router: Router, 
+    private notificacionesServicio :NotificacionesService
     ) {}
 
   ngOnInit(): void {
@@ -26,12 +27,7 @@ export class MenuComponent {
     });
   }
 
-
   onClick() {
-    this.usuarioService.logout()
-      .then(() => {
-        this.router.navigate(['']);
-      })
-      .catch(error => console.log(error));
+    this.notificacionesServicio.confirmarLogout();
   }
 }

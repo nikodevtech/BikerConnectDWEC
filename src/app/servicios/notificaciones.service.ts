@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import Swal from 'sweetalert2';
 import { BaseDatosService } from './base-datos.service';
 import { Usuario } from '../modelo/usuario';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +11,8 @@ import { Usuario } from '../modelo/usuario';
 export class NotificacionesService {
   constructor(
     private _baseDatosService: BaseDatosService,
-    private usuarioServicio: UsuarioService
+    private usuarioServicio: UsuarioService,
+    private router: Router
   ) {}
 
   /**
@@ -26,6 +28,28 @@ export class NotificacionesService {
       icon: tipo,
     });
   }
+
+  confirmarLogout() {
+    Swal.fire({
+        title: '¿Estás seguro de que deseas cerrar sesión?',
+        text: 'Serás redirigido a la página de bienvenida.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, cerrar sesión'
+    }).then((result) => {
+        if (result.isConfirmed) {
+          this.usuarioServicio.logout()
+          .then(() => {
+            this.router.navigate(['']);
+          })
+          .catch(error => console.log(error));
+        } else {
+            console.log('Logout cancelado');
+        }
+    });
+}
 
   /**
    * Muestra una confirmación para eliminar un elemento y realiza la acción si es confirmada.
