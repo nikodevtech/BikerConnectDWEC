@@ -7,25 +7,26 @@ import { UsuarioService } from 'src/app/servicios/usuario.service';
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  styleUrls: ['./dashboard.component.css'],
 })
 export class DashboardComponent {
-
   emailUsuarioActual: string | undefined | null;
   usuarioActual: Usuario | undefined;
-  
+
   constructor(
     private usuarioServicio: UsuarioService,
-    private router: Router,
     private baseDatosServicio: BaseDatosService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
-   this.emailUsuarioActual = this.usuarioServicio.obtenerUsuarioActual()?.email;
-   this.baseDatosServicio.obtenerPorFiltro("usuarios", "email", this.emailUsuarioActual).subscribe(
-    (data) => {
-      this.usuarioActual = data[0];
-    });
-  }
+    this.usuarioServicio.guardarUsuarioEnLocalStorage();
 
+    this.emailUsuarioActual = this.usuarioServicio.obtenerUsuarioActual()?.email;
+    
+    this.baseDatosServicio
+      .obtenerPorFiltro('usuarios', 'email', this.emailUsuarioActual)
+      .subscribe((data) => {
+        this.usuarioActual = data[0];
+      });
+  }
 }
