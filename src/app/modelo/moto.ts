@@ -5,5 +5,5 @@ export interface Moto {
     anyo: number;
     color: string;
     descModificaciones: string;
-    usuarioId: string;
+    propietarioId: string;
 }

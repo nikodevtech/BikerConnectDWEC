@@ -25,9 +25,15 @@
                 <li class="nav-item me-3" *ngIf="componenteActual === 'administracion/listado-usuarios'">
                     <a class="nav-link fw-bold text-white" routerLink="/autenticacion/dashboard"><i class="bi bi-house fs-5"> Volver a dashboard</i></a>
                 </li>
+                <li class="nav-item me-3" *ngIf="componenteActual === 'motocicletas/mis-motocicletas'">
+                    <a class="nav-link fw-bold text-white" routerLink="/autenticacion/dashboard"><i class="bi bi-house fs-5"> Volver a dashboard</i></a>
+                </li>
+                <li class="nav-item me-3" *ngIf="componenteActual === 'motocicletas/registrar-motocicleta'">
+                    <a class="nav-link fw-bold text-white" routerLink="/motocicletas/mis-motocicletas"><i class="bi bi-bicycle fs-5"> Volver a mis motos</i></a>
+                </li>
                 <li class="nav-item me-3" *ngIf="componenteActual === 'administracion/editar-usuario'">
                     <a class="nav-link fw-bold text-white" routerLink="/administracion/listado-usuarios"><i class="bi bi-person-fill-gear fs-5"> Volver a administración de usuarios</i></a>
-                </li>                  
+                </li>                   
             </ul>
         </div>
     </div>

@@ -7,7 +7,7 @@ import { RegistroMotocicletaComponent } from './registro-motocicleta/registro-mo
 const routes: Routes = [
   { path: '', component: MotocicletasComponent, children:[
     { path: 'mis-motocicletas', component: ListaMotocicletasComponent },
-    { path: 'registrar-motocicleta', component: RegistroMotocicletaComponent },
+    { path: 'registrar-motocicleta/:id', component: RegistroMotocicletaComponent },
   ] }
 ];
 
