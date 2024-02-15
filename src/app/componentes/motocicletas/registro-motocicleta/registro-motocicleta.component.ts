@@ -16,7 +16,6 @@ import { UsuarioService } from 'src/app/servicios/usuario.service';
   styleUrls: ['./registro-motocicleta.component.css'],
 })
 export class RegistroMotocicletaComponent {
-  submitted: boolean = false;
   idPropietario: string = ''; 
 
   constructor(

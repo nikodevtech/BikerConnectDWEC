@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Quedada } from 'src/app/modelo/quedada';
+import { QuedadaService } from 'src/app/servicios/quedada.service';
 
 @Component({
   selector: 'app-lista-quedadas',
@@ -8,20 +9,17 @@ import { Quedada } from 'src/app/modelo/quedada';
 })
 export class ListaQuedadasComponent {
 
-  quedadas: Quedada[] = []; // Asegúrate de inicializar el arreglo quedadas
+  quedadas: Quedada[] = []; 
 
-  constructor() { }
+  constructor(private quedadaServicio: QuedadaService) { }
 
   ngOnInit(): void {
-    // En este método ngOnInit puedes llamar a un servicio para obtener las quedadas desde el backend
-    // Por ejemplo:
-    // this.obtenerQuedadas();
+    this.obtenerQuedadas();
   }
 
-  // Método para obtener las quedadas desde el backend (puedes llamar a un servicio)
-  // obtenerQuedadas() {
-  //   this.quedadaService.obtenerQuedadas().subscribe((quedadas: Quedada[]) => {
-  //     this.quedadas = quedadas;
-  //   });
-  // }
+  obtenerQuedadas() {
+    this.quedadaServicio.obtenerQuedadas().subscribe((quedadas: Quedada[]) => {
+      this.quedadas = quedadas;
+    });
+  }
 }

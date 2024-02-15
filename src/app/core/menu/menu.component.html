@@ -36,7 +36,10 @@
                 </li>
                 <li class="nav-item me-3" *ngIf="componenteActual === 'administracion/editar-usuario'">
                     <a class="nav-link fw-bold text-white" routerLink="/administracion/listado-usuarios"><i class="bi bi-person-fill-gear fs-5"> Volver a administración de usuarios</i></a>
-                </li>                   
+                </li>
+                <li class="nav-item me-3" *ngIf="componenteActual === 'quedadas/planificar-quedada'">
+                    <a class="nav-link fw-bold text-white" routerLink="/quedadas/listado-quedadas"><i class="bi bi-people-fill fs-5"> Volver a quedadas</i></a>
+                </li>                     
             </ul>
         </div>
     </div>
