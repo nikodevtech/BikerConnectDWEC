@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
 import { NotificacionesService } from 'src/app/servicios/notificaciones.service';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
 import { Router } from '@angular/router';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-lista-usuarios',
@@ -27,18 +28,23 @@ export class ListaUsuariosComponent {
   obtenerUsuarios() {
     this.baseDatosServicio
       .obtenerTodos('usuarios')
-      .subscribe((usuarios: Usuario[]) => {
-        this.usuarios = usuarios.map((usuario) => {
-          return {
+      .pipe(
+        map((usuarios: Usuario[]) => {
+          return usuarios.map((usuario) => ({
             ...usuario,
             fechaRegistro: this.convertirTimestampADate(usuario.fechaRegistro),
-          };
-        });
+          }));
+        })
+      )
+      .subscribe((usuarios: Usuario[]) => {
+        this.usuarios = usuarios;
       });
   }
+
   private convertirTimestampADate(timestamp: any): Date {
     return timestamp.toDate();
   }
+
   eliminarUsuario(id: string, email: string) {
 
     const usuarioAeliminar: Usuario = this.usuarios.find(
@@ -54,7 +60,7 @@ export class ListaUsuariosComponent {
       return;
     }
 
-    this.notificacionesServicio.confirmarEliminar(
+    this.notificacionesServicio.confirmarEliminarUsuario(
       id,
       email,
       'usuario',
@@ -64,5 +70,11 @@ export class ListaUsuariosComponent {
   }
   navegarARegistro() {
     this.router.navigate(['/autenticacion/registrar'], { queryParams: { from: 'admin' } });
+  }
+
+  buscarUsuarios() {
+     const busqueda = (document.querySelector('input[name="busquedaUser"]') as HTMLInputElement).value;
+     const usuariosFiltrados = this.usuarios.filter(usuario => usuario.email.includes(busqueda));
+     this.usuarios = usuariosFiltrados;
   }
 }

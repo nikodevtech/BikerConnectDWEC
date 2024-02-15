@@ -5,7 +5,6 @@
         <h4 class="text-light text-center subtituloSecundario">Bienvenido {{emailUsuarioActual}}</h4>
     </div>
 </div>
-
 <div class="row">
     <div class="col-md-4" *ngIf="usuarioActual?.rol === 'ROLE_ADMIN'">
         <div class="card mb-4 dashboardCard border border-dark cardPrincipal">
@@ -33,7 +32,7 @@
             <div class="card-body">
                 <h5 class="card-title">Quedadas</h5>
                 <p class="card-text">Asistir o planificar una nueva quedada.</p>
-                <a routerLink="/privada/quedadas" class="btn buttonPrincipal"><i class="bi bi-arrow-right-circle"> Acceder</i></a>
+                <a routerLink="/quedadas/listado-quedadas" class="btn buttonPrincipal"><i class="bi bi-arrow-right-circle"> Acceder</i></a>
             </div>
         </div>
     </div>

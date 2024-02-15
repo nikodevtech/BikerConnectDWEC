@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Usuario } from 'src/app/modelo/usuario';
 import { BaseDatosService } from 'src/app/servicios/base-datos.service';
 import { NotificacionesService } from 'src/app/servicios/notificaciones.service';
-import { UsuarioService } from 'src/app/servicios/usuario.service';
 
 @Component({
   selector: 'app-detalle-usuario',

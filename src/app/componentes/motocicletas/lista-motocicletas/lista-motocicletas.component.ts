@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Moto } from 'src/app/modelo/moto';
 import { Usuario } from 'src/app/modelo/usuario';
 import { MotoService } from 'src/app/servicios/moto.service';
+import { NotificacionesService } from 'src/app/servicios/notificaciones.service';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
 
 @Component({
@@ -17,9 +18,9 @@ export class ListaMotocicletasComponent {
   constructor(
     private motoService: MotoService,
     private router: Router,
-    private usuarioServicio: UsuarioService
+    private usuarioServicio: UsuarioService,
+    private notificacionesServicio: NotificacionesService
   ) {
-    this.usuarioServicio.guardarUsuarioEnLocalStorage();
     this.usuarioActual = this.usuarioServicio.obtenerUsuarioDeLocalStorage();
   }
 
@@ -33,8 +34,18 @@ export class ListaMotocicletasComponent {
     }
   }
 
-  confirmarEliminarMoto(id: string) {
-    // Aquí puedes implementar la lógica para mostrar el mensaje de confirmación con SweetAlert
-    // y luego llamar al método para eliminar la moto con el id proporcionado.
+  confirmarEliminarMoto(id: string, marca: string, modelo: string) {
+    const motoAeliminar: Moto= this.misMotos.find(
+      (moto) => moto.id === id
+    )!;
+
+    this.notificacionesServicio.confirmarEliminarMoto(
+      id,
+      marca,
+      modelo,
+      'motos',
+      this.misMotos,
+      this.usuarioActual
+    );
   }
 }

@@ -1,0 +1,40 @@
+<div class="card bg-light cardPrincipal">
+    <div class="card-header border-bottom border-3">
+        <div class="d-flex justify-content-between align-items-center w-100">
+            <h3 class="subtituloSecundario m-0">Quedadas</h3>
+            <div>
+                <a routerLink="/privada/quedadas/planificar-quedada" role="button" class="btn buttonPrincipal me-2">
+                    <i class="bi bi-calendar2-date p-2 fs-5"> Planificar quedada</i>
+                </a>
+                <a routerLink="/privada/quedadas/mis-quedadas" role="button" class="btn buttonPrincipal">
+                    <i class="bi bi-people p-2 fs-5"> Mis quedadas</i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="card-body"> 
+        <h5 class="card-title text-center text-danger" *ngIf="quedadas.length === 0">No hay registros en el sistema de ninguna quedada</h5>
+        <table class="table table-striped table-bordered" *ngIf="quedadas.length > 0">
+            <thead class="thead-inverse">
+                <tr>
+                    <th class="tableCustom">Lugar</th>
+                    <th class="tableCustom">Fecha y hora</th>
+                    <th class="tableCustom">Estado</th>
+                    <th class="tableCustom">Detalles</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let quedada of quedadas">
+                    <td>{{ quedada.lugar }}</td>
+                    <td>{{ quedada.fechaHora | date:'dd-MM-yyyy HH:mm' }}</td>
+                    <td>{{ quedada.estado }}</td>
+                    <td>
+                        <a [routerLink]="'/privada/quedadas/detalle-quedada/' + quedada.id" role="button" class="btn buttonPrincipal">
+                            <i class="bi bi-file-text"> Ver</i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

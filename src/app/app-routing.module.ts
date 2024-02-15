@@ -7,6 +7,7 @@ const routes: Routes = [
   { path: 'autenticacion', loadChildren: () => import('./componentes/autenticacion/autenticacion.module').then(m => m.AutenticacionModule) },
   { path: 'administracion', loadChildren: () => import('./componentes/administracion/administracion.module').then(m => m.AdministracionModule) },
   { path: 'motocicletas', loadChildren: () => import('./componentes/motocicletas/motocicletas.module').then(m => m.MotocicletasModule) },
+  { path: 'quedadas', loadChildren: () => import('./componentes/quedadas/quedadas.module').then(m => m.QuedadasModule) },
   { path: '**', pathMatch: 'full', redirectTo: '' }
 ];
 

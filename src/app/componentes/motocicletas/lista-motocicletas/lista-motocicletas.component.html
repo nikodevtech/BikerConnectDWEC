@@ -1,10 +1,14 @@
 <div class="card bg-light cardPrincipal">
-    <div class="card-header border-bottom border-3"><h3 class="subtituloSecundario">Mis motos</h3></div>
+    <div class="card-header border-bottom border-3">
+        <div class="d-flex justify-content-between align-items-center w-100">
+            <h3 class="subtituloSecundario m-0">Mis motos</h3>
+            <a routerLink="/motocicletas/registrar-motocicleta/{{ usuarioActual?.id }}" role="button" class="btn buttonPrincipal p-2">
+                <i class="bi bi-bicycle p-2 fs-5"> Registrar moto</i>
+            </a>
+        </div>
+    </div>
     <div class="card-body">
-        <h5 class="card-title text-center text-danger" *ngIf="misMotos.length === 0">No tienes ninguna moto registrada en el sistema</h5>
-        <a routerLink="/motocicletas/registrar-motocicleta/{{ usuarioActual?.id }}" role="button" class="btn buttonPrincipal p-2 mb-3">
-            <i class="bi bi-bicycle p-2 fs-5"> Registrar moto</i>
-        </a>
+        <h5 class="card-title text-center text-danger mb-3" *ngIf="misMotos.length === 0">No tienes ninguna moto registrada en el sistema</h5>
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" *ngIf="misMotos.length > 0">
             <div *ngFor="let moto of misMotos" class="col">
                 <div class="card cardMoto">
@@ -13,7 +17,7 @@
                         <p class="card-text">Color: {{ moto.color }}</p>
                         <p class="card-text">Año de fabricación: {{ moto.anyo }}</p>
                         <p class="card-text">Descripción modificaciones: {{ moto.descModificaciones }}</p>
-                        <button class="btn btn-danger btn-sm" *ngIf="moto.id" (click)="confirmarEliminarMoto(moto.id)">
+                        <button class="btn btn-danger btn-sm" *ngIf="moto.id" (click)="confirmarEliminarMoto(moto.id, moto.marca, moto.modelo)">
                             <i class="bi bi-trash"> Eliminar</i>
                         </button>
                     </div>
@@ -22,3 +26,4 @@
         </div>
     </div>
 </div>
+
