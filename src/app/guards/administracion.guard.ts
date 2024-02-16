@@ -9,7 +9,7 @@ export const administracionGuard: CanActivateFn = (route: ActivatedRouteSnapshot
   const router = inject(Router);
 
   const usuarioActual = usuarioService.obtenerUsuarioDeLocalStorage();
-
+  console.log('Usuario actual en local storage:', usuarioActual);
   if(!usuarioActual) {
     console.log('No hay usuario actual en local storage');
     // Si no hay usuario actual, redirige al usuario al inicio de sesión

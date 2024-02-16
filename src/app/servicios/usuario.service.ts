@@ -19,6 +19,7 @@ export class UsuarioService {
   }
 
   logout(){
+    this.eliminarUsuarioDeLocalStorage();
     return signOut(this.auth);
   }
 
@@ -64,6 +65,9 @@ export class UsuarioService {
 
   actualizarUsuarioEnLocalStorage(usuario: Usuario){
     localStorage.setItem('usuarioActual', JSON.stringify(usuario)); 
+  }
+  eliminarUsuarioDeLocalStorage(){
+    localStorage.removeItem('usuarioActual');
   }
 
   actualizarUsuario(usuario: Usuario){

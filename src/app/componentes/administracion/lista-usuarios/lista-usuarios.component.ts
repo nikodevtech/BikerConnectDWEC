@@ -38,12 +38,22 @@ export class ListaUsuariosComponent {
       )
       .subscribe((usuarios: Usuario[]) => {
         this.usuarios = usuarios;
+        console.log(this.usuarios);
       });
   }
 
   private convertirTimestampADate(timestamp: any): Date {
-    return timestamp.toDate();
+    if (timestamp instanceof Date) {
+      return timestamp; // Si ya es un objeto Date, devolverlo tal cual
+    } else if (timestamp && typeof timestamp.toDate === 'function') {
+      return timestamp.toDate(); // Si es un objeto Timestamp, convertirlo a Date
+    } else if (timestamp && typeof timestamp.seconds === 'number') {
+      return new Date(timestamp.seconds * 1000); // Si es un objeto con la propiedad 'seconds', asumir que es un objeto Timestamp y convertirlo a Date
+    } else {
+      return new Date(); // Si no se puede convertir, devolver la fecha actual como fallback
+    }
   }
+  
 
   eliminarUsuario(id: string, email: string) {
 
