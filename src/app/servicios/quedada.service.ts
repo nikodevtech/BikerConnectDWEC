@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BaseDatosService } from './base-datos.service';
 import { Quedada } from '../modelo/quedada';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { DocumentReference } from '@angular/fire/firestore';
 
 @Injectable({
@@ -28,5 +28,11 @@ export class QuedadaService {
 
   actualizarQuedada(quedada: Quedada): Promise<void> {
     return this.baseDatosServicio.actualizar('quedadas', quedada);
+  }
+
+  obtenerQuedadasPorIds(ids: string[]): Observable<Quedada[]> {
+    return this.baseDatosServicio.obtenerTodos('quedadas').pipe(
+      map((quedadas: Quedada[]) => quedadas.filter(quedada => ids.includes(quedada.id!)))
+    );
   }
 }

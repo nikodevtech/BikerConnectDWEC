@@ -48,6 +48,11 @@ export class DetalleQuedadaComponent {
   unirseQuedada() {
     if (this.usuarioActual && this.usuarioActual.misMotos && this.usuarioActual.misMotos.length > 0) {
       this.quedada?.participantes?.push(this.usuarioActual!);
+      this.usuarioActual?.misQuedadas?.push(this.quedada?.id!);
+      this.usuarioServicio.actualizarUsuarioEnLocalStorage(this.usuarioActual);
+      this.usuarioServicio.actualizarUsuario(this.usuarioActual!).then(() => {
+        console.log('Se ha actualizado el usuario');
+      })
       this.quedadaServicio.actualizarQuedada(this.quedada!).then(() => {
         console.log('Se ha unido la quedada');
         this.notificacionesServicio.mostrarNotificacion("¡Su asistencia ha sido registrada!", "Ahora es un participante más de la quedada", 'success');

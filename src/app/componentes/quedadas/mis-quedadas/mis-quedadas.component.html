@@ -1,1 +1,20 @@
-<p>mis-quedadas works!</p>
+<div class="card bg-light cardPrincipal">
+    <div class="card-header border-bottom border-3">
+        <h3 class="subtituloSecundario">Mis Quedadas</h3>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title text-center text-danger" *ngIf="misQuedadas.length === 0">No hay registro de ninguna quedada</h5>
+        <div class="col-md-8 offset-md-2">
+            <div class="card mb-4" *ngFor="let quedada of misQuedadas">                
+                <div class="card-body">
+                    <h4 class="textoPrincipal">Quedada: {{ quedada.estado }}</h4>
+                    <br>
+                    <h6 class="card-title">{{ quedada.lugar }} {{ quedada.fechaHora | date: 'dd-MM-yyyy HH:mm:ss' }}</h6>
+                    <p class="card-text">{{ quedada.descripcion }}</p>
+                    <a [routerLink]="['/quedadas/detalle-quedada/', quedada.id]" class="btn buttonPrincipal"><i class="bi bi-file-text"> Ver Detalles</i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

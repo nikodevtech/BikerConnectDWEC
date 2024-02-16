@@ -74,6 +74,9 @@ export class RegistroComponent {
       rol: 'ROLE_USER',
       fechaRegistro: new Date(),
     }
+    if (!usuario.misQuedadas || !Array.isArray(usuario.misQuedadas)) {
+      usuario.misQuedadas = [];
+    }
     this.baseDatosService.insertar('usuarios', usuario).then(() => {
       if (this.tipoRegistro === 'admin') {
         this.notificacionesServicio.mostrarNotificacion('Registro completado con exito', 'Cuenta creada, el usuari puede hacer uso de ella.', 'success');

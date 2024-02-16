@@ -61,5 +61,13 @@ export class UsuarioService {
     const usuarioActual = localStorage.getItem('usuarioActual');
     return usuarioActual ? JSON.parse(usuarioActual) : null;
   }
+
+  actualizarUsuarioEnLocalStorage(usuario: Usuario){
+    localStorage.setItem('usuarioActual', JSON.stringify(usuario)); 
+  }
+
+  actualizarUsuario(usuario: Usuario){
+    return this.baseDatosServicio.actualizar('usuarios', usuario); 
+  }
   
 }

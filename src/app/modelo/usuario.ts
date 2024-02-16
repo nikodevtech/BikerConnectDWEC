@@ -1,4 +1,5 @@
 import { Moto } from "./moto";
+import { Quedada } from "./quedada";
 
 export interface Usuario {
     id?: string;
@@ -10,5 +11,5 @@ export interface Usuario {
     rol?: string;
     fechaRegistro?: Date;
     misMotos?: Moto[];
-    misQuedadasIds?: string[];
+    misQuedadas?: string[];
 }
