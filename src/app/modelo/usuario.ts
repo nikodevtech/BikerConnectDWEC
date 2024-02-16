@@ -10,4 +10,5 @@ export interface Usuario {
     rol?: string;
     fechaRegistro?: Date;
     misMotos?: Moto[];
+    misQuedadasIds?: string[];
 }

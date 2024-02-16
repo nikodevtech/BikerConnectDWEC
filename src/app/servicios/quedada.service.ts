@@ -16,6 +16,17 @@ export class QuedadaService {
   }
 
   registrarQuedada(quedada: Quedada): Promise<DocumentReference<Quedada>> {
+    if (!quedada.participantes || !Array.isArray(quedada.participantes)) {
+      quedada.participantes = [];
+    }
     return this.baseDatosServicio.insertar('quedadas', quedada);
+  }
+
+  obtenerQuedada(id: string): Observable<Quedada> {
+    return this.baseDatosServicio.obtenerPorId('quedadas', id);
+  }
+
+  actualizarQuedada(quedada: Quedada): Promise<void> {
+    return this.baseDatosServicio.actualizar('quedadas', quedada);
   }
 }

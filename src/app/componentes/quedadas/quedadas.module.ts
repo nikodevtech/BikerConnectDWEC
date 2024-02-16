@@ -7,6 +7,7 @@ import { PlanificarQuedadaComponent } from './planificar-quedada/planificar-qued
 import { MisQuedadasComponent } from './mis-quedadas/mis-quedadas.component';
 import { ListaQuedadasComponent } from './lista-quedadas/lista-quedadas.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DetalleQuedadaComponent } from './detalle-quedada/detalle-quedada.component';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     QuedadasComponent,
     PlanificarQuedadaComponent,
     MisQuedadasComponent,
-    ListaQuedadasComponent
+    ListaQuedadasComponent,
+    DetalleQuedadaComponent
   ],
   imports: [
     CommonModule,

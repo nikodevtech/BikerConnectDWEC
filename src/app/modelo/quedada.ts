@@ -1,3 +1,4 @@
+import { Usuario } from "./usuario";
 
 export interface Quedada {
     id?: string;
@@ -6,5 +7,6 @@ export interface Quedada {
     lugar: string;
     estado: string;
     usuarioOrganizador: string;
-    participantesIds?: string[];
+    // participantesIds?: string[];
+    participantes?: Usuario[];
 }
