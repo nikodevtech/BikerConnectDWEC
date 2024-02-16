@@ -79,7 +79,7 @@ export class RegistroComponent {
     }
     this.baseDatosService.insertar('usuarios', usuario).then(() => {
       if (this.tipoRegistro === 'admin') {
-        this.notificacionesServicio.mostrarNotificacion('Registro completado con exito', 'Cuenta creada, el usuari puede hacer uso de ella.', 'success');
+        this.notificacionesServicio.mostrarNotificacion('Registro completado con exito', 'Cuenta creada, el usuario puede hacer uso de ella.', 'success');
         this.router.navigate(['/administracion/listado-usuarios']);
       } else {
         this.notificacionesServicio.mostrarNotificacion('Registro completado con exito', 'Su cuenta ha sido creada, ahora puede iniciar sesión.', 'success');

@@ -1,6 +1,5 @@
 import { BaseDatosService } from './../../../servicios/base-datos.service';
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { Usuario } from 'src/app/modelo/usuario';
 import { UsuarioService } from 'src/app/servicios/usuario.service';
 
@@ -16,10 +15,12 @@ export class DashboardComponent {
   constructor(
     private usuarioServicio: UsuarioService,
     private baseDatosServicio: BaseDatosService
-  ) {}
+  ) {
+    localStorage.clear();
+    this.usuarioServicio.guardarUsuarioEnLocalStorage();
+  }
 
   ngOnInit(): void {
-    this.usuarioServicio.guardarUsuarioEnLocalStorage();
 
     this.emailUsuarioActual = this.usuarioServicio.obtenerUsuarioActual()?.email;
     

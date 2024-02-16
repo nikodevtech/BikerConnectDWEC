@@ -46,13 +46,32 @@ export class DetalleQuedadaComponent {
   }
 
   unirseQuedada() {
+    // Verificar si el usuario tiene motos registradas
     if (this.usuarioActual && this.usuarioActual.misMotos && this.usuarioActual.misMotos.length > 0) {
+      // Verificar si el usuario ya está incluido en la lista de participantes de la quedada
+      if (this.quedada && this.quedada.participantes && this.quedada.participantes.some(participante => participante.id === this.usuarioActual?.id)) {
+        console.log('El usuario ya está participando en esta quedada');
+        this.notificacionesServicio.mostrarNotificacion('Ya está registrado como asistente', 'Estás incluido en la lista de participantes de esta quedada', 'info');
+        return; // No permitir unirse nuevamente a la quedada
+      }
+      
+      // Agregar al usuario como participante de la quedada
       this.quedada?.participantes?.push(this.usuarioActual!);
-      this.usuarioActual?.misQuedadas?.push(this.quedada?.id!);
+  
+      // Agregar la quedada al array de quedadas del usuario
+      if (!this.usuarioActual.misQuedadas) {
+        this.usuarioActual.misQuedadas = [];
+      }
+      this.usuarioActual.misQuedadas.push(this.quedada?.id!);
+  
+      // Actualizar el usuario en localStorage y en la base de datos
       this.usuarioServicio.actualizarUsuarioEnLocalStorage(this.usuarioActual);
+      console.log(this.usuarioActual);
       this.usuarioServicio.actualizarUsuario(this.usuarioActual!).then(() => {
         console.log('Se ha actualizado el usuario');
-      })
+      });
+  
+      // Actualizar la quedada en la base de datos
       this.quedadaServicio.actualizarQuedada(this.quedada!).then(() => {
         console.log('Se ha unido la quedada');
         this.notificacionesServicio.mostrarNotificacion("¡Su asistencia ha sido registrada!", "Ahora es un participante más de la quedada", 'success');
@@ -62,4 +81,5 @@ export class DetalleQuedadaComponent {
       this.notificacionesServicio.mostrarNotificacion('Debe tener registrada una moto', 'Para unirse a la quedada, por favor registre al menos una moto', 'info');
     }
   }
+  
 }

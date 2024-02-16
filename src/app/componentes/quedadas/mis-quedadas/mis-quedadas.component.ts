@@ -15,6 +15,7 @@ export class MisQuedadasComponent {
   constructor(private quedadaServicio: QuedadaService, private usuarioServicio: UsuarioService) { }
 
   ngOnInit(): void {
+    localStorage
     this.obtenerMisQuedadas();
   }
 

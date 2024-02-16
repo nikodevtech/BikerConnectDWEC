@@ -3,7 +3,7 @@
         <h3 class="subtituloSecundario">Mis Quedadas</h3>
     </div>
     <div class="card-body">
-        <h5 class="card-title text-center text-danger" *ngIf="misQuedadas.length === 0">No hay registro de ninguna quedada</h5>
+        <h5 class="card-title text-center text-danger" *ngIf="misQuedadas  &&misQuedadas.length === 0">No hay registro de ninguna quedada</h5>
         <div class="col-md-8 offset-md-2">
             <div class="card mb-4" *ngFor="let quedada of misQuedadas">                
                 <div class="card-body">

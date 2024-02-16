@@ -19,12 +19,16 @@ export class UsuarioService {
   }
 
   logout(){
-    this.eliminarUsuarioDeLocalStorage();
+    localStorage.clear();
     return signOut(this.auth);
   }
 
   obtenerUsuarioActual(){
     return this.auth.currentUser;
+  }
+
+  obtenerUsuarioFirebase(email: string){
+    return this.baseDatosServicio.obtenerPorFiltro("usuarios", "email", email);
   }
 
   async borrarUsuario(usuario: Usuario){
@@ -42,11 +46,11 @@ export class UsuarioService {
 
   guardarUsuarioEnLocalStorage(){
 
-    const user = this.obtenerUsuarioActual();
-
+    localStorage.clear();
+    const userEmail = this.obtenerUsuarioActual()?.email;
     let usuario: Usuario;
 
-    this.baseDatosServicio.obtenerPorFiltro("usuarios", "email", user?.email).subscribe(
+    this.baseDatosServicio.obtenerPorFiltro("usuarios", "email", userEmail).subscribe(
       (data: Usuario[]) => {
         if(data.length > 0) {
           usuario = data[0];
@@ -60,6 +64,7 @@ export class UsuarioService {
 
   obtenerUsuarioDeLocalStorage(){
     const usuarioActual = localStorage.getItem('usuarioActual');
+    console.log('Usuario actual:', usuarioActual);
     return usuarioActual ? JSON.parse(usuarioActual) : null;
   }
 
@@ -68,6 +73,7 @@ export class UsuarioService {
   }
   eliminarUsuarioDeLocalStorage(){
     localStorage.removeItem('usuarioActual');
+    localStorage.clear();
   }
 
   actualizarUsuario(usuario: Usuario){
