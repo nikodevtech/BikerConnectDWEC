@@ -64,4 +64,32 @@ export class QuedadaService {
         });
     });
   }
+
+  cancelarQuedada(quedadaId: string): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      // Se obtiene la quedada por su ID
+      this.baseDatosServicio.obtenerPorId('quedadas', quedadaId).subscribe({
+        next: (quedada: Quedada) => {
+          // Verifica si la quedada existe
+          if (!quedada) {
+            reject(new Error('La quedada no existe'));
+            return;
+          }
+
+          // Cambia el estado de la quedada a "Cancelada"
+          quedada.estado = 'Cancelada';
+
+          // Se actualiza la quedada en firebase
+          this.baseDatosServicio.actualizar('quedadas', quedada).then(() => {
+            resolve();
+          }).catch(error => {
+            reject(error);
+          });
+        },
+        error: (error) => {
+          reject(error);
+        }
+      });
+    });
+  }
 }

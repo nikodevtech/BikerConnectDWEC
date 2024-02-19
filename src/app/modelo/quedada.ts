@@ -7,6 +7,5 @@ export interface Quedada {
     lugar: string;
     estado: string;
     usuarioOrganizador: string;
-    // participantesIds?: string[];
     participantes?: Usuario[];
 }

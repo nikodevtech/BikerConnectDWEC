@@ -32,14 +32,40 @@ export class DetalleQuedadaComponent {
       });
   }
 
-  confirmarCancelarQuedada(event: Event) {
-    // Aquí deberías implementar la lógica para confirmar o cancelar la quedada
-    // Puedes usar el ID de la quedada que está en el atributo 'data-id' del botón
-    const quedadaId = (event.target as HTMLElement).getAttribute('data-id');
-    if (quedadaId) {
-      // Llama a tu servicio para confirmar o cancelar la quedada
-      // this.quedadaService.confirmarCancelarQuedada(quedadaId);
+  confirmarCancelarQuedada(quedadaId: string, fechaQuedada: Date) {
+    const fechaActual = new Date();
+    const fechaQuedadaDate = new Date(fechaQuedada);
+
+    // Verifica si la fecha actual es posterior a la fecha de la quedada
+    if (this.quedada?.fechaHora && fechaActual >= fechaQuedadaDate) {
+      console.log('La fecha de la quedada ya ha pasado',this.quedada?.fechaHora,fechaActual);
+      // Muestra un mensaje indicando que la fecha de la quedada ha pasado y no se puede cancelar
+      this.notificacionesServicio.mostrarNotificacion(
+        'No puede cancelar la quedada',
+        'La fecha de la quedada ya ha pasado. En este caso solo puedes marcarla como completada',
+        'info'
+      );
+      return; // Sale del método y no permite cancelar a la quedada
     }
+
+    // Si llega a este punto quiere decir que la fecha de la quedada 
+    // no ha pasado todavía y se puede cancelar
+    this.quedadaServicio.cancelarQuedada(quedadaId).then(() => {
+      console.log('La quedada ha sido cancelada');
+      this.notificacionesServicio.mostrarNotificacion(
+          'Quedada cancelada',
+          'La quedada ha sido cancelada correctamente',
+          'success'
+      );
+  }).catch((error) => {
+      console.error('Error al cancelar la quedada:', error);
+      this.notificacionesServicio.mostrarNotificacion(
+          'Error al cancelar la quedada',
+          'Ha ocurrido un error al cancelar la quedada. Por favor, inténtalo de nuevo más tarde',
+          'error'
+      );
+  });
+
   }
 
   unirseQuedada() {
@@ -67,7 +93,7 @@ export class DetalleQuedadaComponent {
         return; // Sale del método y no permite unirse nuevamente a la quedada
       }
 
-      // Si llega a este punto, el usuario no está en la lista de participantes de la quedada, 
+      // Si llega a este punto, el usuario no está en la lista de participantes de la quedada,
       //por lo tanto se añade al usuario como participante de la quedada
       this.quedada?.participantes?.push(this.usuarioActual!);
 
@@ -77,9 +103,8 @@ export class DetalleQuedadaComponent {
       }
       this.usuarioActual.misQuedadas.push(this.quedada?.id!);
 
-      // Actualiza el usuario en localStorage 
+      // Actualiza el usuario en localStorage
       this.usuarioServicio.actualizarUsuarioEnLocalStorage(this.usuarioActual);
-      console.log(this.usuarioActual);
       this.usuarioServicio.actualizarUsuario(this.usuarioActual!).then(() => {
         console.log('Se ha actualizado el usuario');
       });
@@ -118,7 +143,7 @@ export class DetalleQuedadaComponent {
         'No puedes cancelar la asistencia a una quedada a la que no estás unido',
         'info'
       );
-      return; // Sale del método y no permite cancelar la asistencia
+      return; // Sale del método para no permitir cancelar la asistencia
     }
 
     // Si llega a esta línea de código quiere decir que el usuario está unido
@@ -137,11 +162,9 @@ export class DetalleQuedadaComponent {
     this.usuarioServicio
       .actualizarUsuario(this.usuarioActual!)
       .then(() => {
-        console.log(
-          'Se ha actualizado el usuario después de cancelar la asistencia a la quedada'
-        );
+        console.log('Se ha actualizado el usuario después de cancelar la asistencia a la quedada');
 
-        // Llamar al servicio para cancelar la asistencia a la quedada
+        // Se llama al servicio para cancelar la asistencia a la quedada
         this.quedadaServicio
           .cancelarAsistenciaQuedada(quedadaId, usuarioId)
           .then(() => {
