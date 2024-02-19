@@ -19,6 +19,12 @@
                 <li class="nav-item me-3" *ngIf="componenteActual === 'autenticacion/registrar'">
                     <a class="nav-link fw-bold text-white" routerLink="/autenticacion/login"><i class="bi bi-box-arrow-in-right fs-5"> Iniciar sesión</i></a>
                 </li>
+                <li class="nav-item me-3" *ngIf="componenteActual === 'autenticacion/registrar?from=admin'">
+                    <a class="nav-link fw-bold text-white" routerLink="/administracion/listado-usuarios"><i class="bi bi-person-fill-gear fs-5"> Volver a administración de usuarios</i></a>
+                </li>
+                <li class="nav-item me-3" *ngIf="componenteActual === 'autenticacion/recuperar-password'">
+                    <a class="nav-link fw-bold text-white" routerLink="/autenticacion/login"><i class="bi bi-box-arrow-in-right fs-5"> Iniciar sesión</i></a>
+                </li>
                 <li class="nav-item me-3" *ngIf="componenteActual === 'autenticacion/dashboard'">
                     <button type="button" class="btn buttonPrincipal" (click)="onClick()"><i class="bi bi-box-arrow-in-left"> Cerrar sesión</i></button>
                 </li>

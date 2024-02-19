@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Auth, createUserWithEmailAndPassword, deleteUser, signInWithEmailAndPassword, signOut } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, deleteUser, sendPasswordResetEmail, signInWithEmailAndPassword, signOut } from '@angular/fire/auth';
 import { Usuario } from '../modelo/usuario';
 import { BaseDatosService } from './base-datos.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -11,11 +12,11 @@ export class UsuarioService {
   constructor(private auth: Auth, private baseDatosServicio: BaseDatosService) { }
 
   registrar(usuario: Usuario){
-    return createUserWithEmailAndPassword(this.auth, usuario.email, usuario.password);
+    return createUserWithEmailAndPassword(this.auth, usuario.email, usuario.password!);
   }
 
   async login(usuario: Usuario){
-    return signInWithEmailAndPassword(this.auth, usuario.email, usuario.password);
+    return signInWithEmailAndPassword(this.auth, usuario.email, usuario.password!);
   }
 
   logout(){
@@ -79,5 +80,10 @@ export class UsuarioService {
   actualizarUsuario(usuario: Usuario){
     return this.baseDatosServicio.actualizar('usuarios', usuario); 
   }
+
+  enviarCorreoRestablecimiento(email: string): Promise<void> {
+    return sendPasswordResetEmail(this.auth, email);
+  }
+  
   
 }

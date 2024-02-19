@@ -8,7 +8,7 @@
         </div>
     </div>
     <div class="card-body">
-        <h5 class="card-title text-center text-danger mb-3" *ngIf="misMotos.length === 0">No tienes ninguna moto registrada en el sistema</h5>
+        <h5 class="card-title text-center text-danger mb-3" *ngIf="misMotos.length === 0">No tiene ninguna moto registrada en el sistema</h5>
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" *ngIf="misMotos.length > 0">
             <div *ngFor="let moto of misMotos" class="col">
                 <div class="card cardMoto">

@@ -85,6 +85,14 @@ export class ListaUsuariosComponent {
   buscarUsuarios() {
      const busqueda = (document.querySelector('input[name="busquedaUser"]') as HTMLInputElement).value;
      const usuariosFiltrados = this.usuarios.filter(usuario => usuario.email.includes(busqueda));
+     if(usuariosFiltrados.length === 0){
+      this.notificacionesServicio.mostrarNotificacion(
+        'No se encontraron usuarios',
+        'No hay coincidencias en el email de los usuarios con la busqueda realizada',
+        'info'
+      )
+      return;
+     }
      this.usuarios = usuariosFiltrados;
   }
 }

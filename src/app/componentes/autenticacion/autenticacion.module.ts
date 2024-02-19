@@ -6,7 +6,8 @@ import { AutenticacionComponent } from './autenticacion.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { LoginComponent } from './login/login.component';
 import { RegistroComponent } from './registro/registro.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RecuperarPasswordComponent } from './recuperar-password/recuperar-password.component';
 
 
 @NgModule({
@@ -15,12 +16,14 @@ import { ReactiveFormsModule } from '@angular/forms';
     RegistroComponent,
     LoginComponent,
     DashboardComponent,
+    RecuperarPasswordComponent,
     
   ],
   imports: [
     CommonModule,
     AutenticacionRoutingModule,
     ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class AutenticacionModule { }

@@ -11,7 +11,6 @@ import { NotificacionesService } from 'src/app/servicios/notificaciones.service'
   styleUrls: ['./detalle-usuario.component.css'],
 })
 export class DetalleUsuarioComponent {
-  
   formEditarUsuario: FormGroup;
   usuario: Usuario | undefined;
   idUsuario: string | undefined;
@@ -28,11 +27,8 @@ export class DetalleUsuarioComponent {
       nombre: ['', Validators.required],
       apellidos: ['', Validators.required],
       telefono: ['', Validators.required],
-      password: ['', Validators.required],
       rol: ['', Validators.required],
     });
-
-    
   }
 
   ngOnInit(): void {
@@ -49,9 +45,8 @@ export class DetalleUsuarioComponent {
             nombre: data.nombre,
             apellidos: data.apellidos,
             telefono: data.telefono,
-            password: data.password,
-            rol: data.rol
-          })
+            rol: data.rol,
+          });
         });
     }
   }
@@ -63,12 +58,15 @@ export class DetalleUsuarioComponent {
       nombre: this.formEditarUsuario.value.nombre,
       apellidos: this.formEditarUsuario.value.apellidos,
       telefono: this.formEditarUsuario.value.telefono,
-      password: this.formEditarUsuario.value.password,
-      rol: this.formEditarUsuario.value.rol
+      rol: this.formEditarUsuario.value.rol,
     };
     this.baseDatosServicio.actualizar('usuarios', usuario).then(() => {
-      this.notificacionesServicio.mostrarNotificacion("¡Datos del usuario actualizados!", "El usuario ha sido modificado correctamente", 'info');
+      this.notificacionesServicio.mostrarNotificacion(
+        '¡Datos del usuario actualizados!',
+        'El usuario ha sido modificado correctamente',
+        'info'
+      );
       this.router.navigate(['/administracion/listado-usuarios']);
-    })
+    });
   }
 }

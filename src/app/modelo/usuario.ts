@@ -1,10 +1,9 @@
 import { Moto } from "./moto";
-import { Quedada } from "./quedada";
 
 export interface Usuario {
     id?: string;
     email: string;
-    password: string;
+    password?: string;
     nombre: string;
     apellidos: string;
     telefono: string;

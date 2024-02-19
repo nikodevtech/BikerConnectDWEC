@@ -25,6 +25,7 @@ export class MenuComponent {
         }
       }
     });
+    
   }
 
   onClick() {
