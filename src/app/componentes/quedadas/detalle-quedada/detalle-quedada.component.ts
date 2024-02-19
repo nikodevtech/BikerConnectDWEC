@@ -19,7 +19,7 @@ export class DetalleQuedadaComponent {
     private quedadaServicio: QuedadaService,
     private route: ActivatedRoute,
     private usuarioServicio: UsuarioService,
-    private notificacionesServicio :NotificacionesService
+    private notificacionesServicio: NotificacionesService
   ) {}
 
   ngOnInit(): void {
@@ -29,9 +29,6 @@ export class DetalleQuedadaComponent {
       .obtenerQuedada(quedadaId)
       .subscribe((quedada: Quedada) => {
         this.quedada = quedada;
-        // Si tienes un servicio para obtener los participantes de la quedada, aquí es donde deberías llamarlo
-        // Por ahora, lo dejamos como un array vacío
-        // this.participantes = this.quedadaService.obtenerParticipantes(quedadaId);
       });
   }
 
@@ -46,40 +43,134 @@ export class DetalleQuedadaComponent {
   }
 
   unirseQuedada() {
-    // Verificar si el usuario tiene motos registradas
-    if (this.usuarioActual && this.usuarioActual.misMotos && this.usuarioActual.misMotos.length > 0) {
-      // Verificar si el usuario ya está incluido en la lista de participantes de la quedada
-      if (this.quedada && this.quedada.participantes && this.quedada.participantes.some(participante => participante.id === this.usuarioActual?.id)) {
+    // Verifica si el usuario tiene motos registradas
+    if (
+      this.usuarioActual &&
+      this.usuarioActual.misMotos &&
+      this.usuarioActual.misMotos.length > 0
+    ) {
+      // Si tiene motos registradas, verifica si el usuario ya está incluido en la lista de participantes de la quedada
+      if (
+        this.quedada &&
+        this.quedada.participantes &&
+        this.quedada.participantes.some(
+          (participante) => participante.id === this.usuarioActual?.id
+        )
+      ) {
+        // Si el usuario ya está incluido en la lista de participantes de la quedada, muestra un mensaje
         console.log('El usuario ya está participando en esta quedada');
-        this.notificacionesServicio.mostrarNotificacion('Ya está registrado como asistente', 'Estás incluido en la lista de participantes de esta quedada', 'info');
-        return; // No permitir unirse nuevamente a la quedada
+        this.notificacionesServicio.mostrarNotificacion(
+          'Ya está registrado como asistente',
+          'Estás incluido en la lista de participantes de esta quedada',
+          'info'
+        );
+        return; // Sale del método y no permite unirse nuevamente a la quedada
       }
-      
-      // Agregar al usuario como participante de la quedada
+
+      // Si llega a este punto, el usuario no está en la lista de participantes de la quedada, 
+      //por lo tanto se añade al usuario como participante de la quedada
       this.quedada?.participantes?.push(this.usuarioActual!);
-  
-      // Agregar la quedada al array de quedadas del usuario
+
+      // Agrega la quedada al array de quedadas del usuario
       if (!this.usuarioActual.misQuedadas) {
         this.usuarioActual.misQuedadas = [];
       }
       this.usuarioActual.misQuedadas.push(this.quedada?.id!);
-  
-      // Actualizar el usuario en localStorage y en la base de datos
+
+      // Actualiza el usuario en localStorage 
       this.usuarioServicio.actualizarUsuarioEnLocalStorage(this.usuarioActual);
       console.log(this.usuarioActual);
       this.usuarioServicio.actualizarUsuario(this.usuarioActual!).then(() => {
         console.log('Se ha actualizado el usuario');
       });
-  
-      // Actualizar la quedada en la base de datos
+
+      // Actualizar la quedada en firebase
       this.quedadaServicio.actualizarQuedada(this.quedada!).then(() => {
         console.log('Se ha unido la quedada');
-        this.notificacionesServicio.mostrarNotificacion("¡Su asistencia ha sido registrada!", "Ahora es un participante más de la quedada", 'success');
+        this.notificacionesServicio.mostrarNotificacion(
+          '¡Su asistencia ha sido registrada!',
+          'Ahora es un participante más de la quedada',
+          'success'
+        );
       });
     } else {
       console.log('El usuario no tiene motos para unirse a la quedada');
-      this.notificacionesServicio.mostrarNotificacion('Debe tener registrada una moto', 'Para unirse a la quedada, por favor registre al menos una moto', 'info');
+      this.notificacionesServicio.mostrarNotificacion(
+        'Debe tener registrada una moto',
+        'Para unirse a la quedada, por favor registre al menos una moto',
+        'info'
+      );
     }
   }
-  
+
+  cancelarAsistenciaQuedada(quedadaId: string, usuarioId: string) {
+    // Verifica si el usuario está unido a la quedada
+    if (
+      !(
+        this.usuarioActual &&
+        this.usuarioActual.misQuedadas &&
+        this.usuarioActual.misQuedadas.includes(quedadaId)
+      )
+    ) {
+      // Si el usuario no está unido se le muestra un mensaje que no puede cancelar la asistencia
+      this.notificacionesServicio.mostrarNotificacion(
+        'No estás unido a esta quedada',
+        'No puedes cancelar la asistencia a una quedada a la que no estás unido',
+        'info'
+      );
+      return; // Sale del método y no permite cancelar la asistencia
+    }
+
+    // Si llega a esta línea de código quiere decir que el usuario está unido
+    // por lo tanto se busca y elimina el ID de la quedada del array misQuedadas del usuario
+    if (this.usuarioActual && this.usuarioActual.misQuedadas) {
+      const index = this.usuarioActual.misQuedadas.findIndex(
+        (id) => id === quedadaId
+      );
+      if (index !== -1) {
+        this.usuarioActual.misQuedadas.splice(index, 1);
+      }
+    }
+
+    // Se actualiza el usuario sin la asistencia a la quedada en localStorage y en Firebase
+    this.usuarioServicio.actualizarUsuarioEnLocalStorage(this.usuarioActual);
+    this.usuarioServicio
+      .actualizarUsuario(this.usuarioActual!)
+      .then(() => {
+        console.log(
+          'Se ha actualizado el usuario después de cancelar la asistencia a la quedada'
+        );
+
+        // Llamar al servicio para cancelar la asistencia a la quedada
+        this.quedadaServicio
+          .cancelarAsistenciaQuedada(quedadaId, usuarioId)
+          .then(() => {
+            console.log('Se ha cancelado la asistencia a la quedada');
+            this.notificacionesServicio.mostrarNotificacion(
+              'Asistencia cancelada',
+              'Se ha eliminado tu asistencia a la quedada',
+              'info'
+            );
+          })
+          .catch((error) => {
+            console.error(
+              'Error al cancelar la asistencia a la quedada:',
+              error
+            );
+            this.notificacionesServicio.mostrarNotificacion(
+              'Error',
+              'Ha ocurrido un error al cancelar la asistencia a la quedada',
+              'error'
+            );
+          });
+      })
+      .catch((error) => {
+        console.error('Error al actualizar el usuario:', error);
+        this.notificacionesServicio.mostrarNotificacion(
+          'Error',
+          'Ha ocurrido un error al actualizar el usuario',
+          'error'
+        );
+      });
+  }
 }

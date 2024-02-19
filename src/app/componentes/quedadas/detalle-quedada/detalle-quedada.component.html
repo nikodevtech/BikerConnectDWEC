@@ -51,9 +51,9 @@
         <a *ngIf="quedada" (click)="unirseQuedada()" class="btn buttonPrincipal m-1">
             <i class="bi bi-calendar2-check"> Confirmar asistencia</i>
         </a>
-        <a *ngIf="quedada" [routerLink]="['/privada/quedadas/detalle-quedada/cancelar-asistencia/', quedada.id]" class="btn btn-danger m-1">
+        <a *ngIf="quedada" (click)="cancelarAsistenciaQuedada(quedada.id!, usuarioActual!.id!)" class="btn btn-danger m-1">
             <i class="bi bi-calendar2-x"> Cancelar asistencia</i>
-        </a>
+        </a>        
         <a *ngIf="quedada?.usuarioOrganizador === usuarioActual?.email" [attr.data-id]="quedada?.id" (click)="confirmarCancelarQuedada($event)" class="btn btn-danger m-1 float-end" >
             <i class="bi bi-calendar2-x"> Cancelar quedada</i>
         </a>
