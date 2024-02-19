@@ -21,5 +21,7 @@ export class ListaQuedadasComponent {
     this.quedadaServicio.obtenerQuedadas().subscribe((quedadas: Quedada[]) => {
       this.quedadas = quedadas;
     });
+    
   }
+
 }

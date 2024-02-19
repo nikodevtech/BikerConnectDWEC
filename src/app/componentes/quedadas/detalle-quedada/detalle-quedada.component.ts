@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Quedada } from 'src/app/modelo/quedada';
 import { Usuario } from 'src/app/modelo/usuario';
 import { NotificacionesService } from 'src/app/servicios/notificaciones.service';
@@ -19,7 +19,7 @@ export class DetalleQuedadaComponent {
     private quedadaServicio: QuedadaService,
     private route: ActivatedRoute,
     private usuarioServicio: UsuarioService,
-    private notificacionesServicio: NotificacionesService
+    private notificacionesServicio: NotificacionesService,
   ) {}
 
   ngOnInit(): void {
@@ -38,7 +38,11 @@ export class DetalleQuedadaComponent {
 
     // Verifica si la fecha actual es posterior a la fecha de la quedada
     if (this.quedada?.fechaHora && fechaActual >= fechaQuedadaDate) {
-      console.log('La fecha de la quedada ya ha pasado',this.quedada?.fechaHora,fechaActual);
+      console.log(
+        'La fecha de la quedada ya ha pasado',
+        this.quedada?.fechaHora,
+        fechaActual
+      );
       // Muestra un mensaje indicando que la fecha de la quedada ha pasado y no se puede cancelar
       this.notificacionesServicio.mostrarNotificacion(
         'No puede cancelar la quedada',
@@ -48,24 +52,29 @@ export class DetalleQuedadaComponent {
       return; // Sale del método y no permite cancelar a la quedada
     }
 
-    // Si llega a este punto quiere decir que la fecha de la quedada 
+    // Si llega a este punto quiere decir que la fecha de la quedada
     // no ha pasado todavía y se puede cancelar
-    this.quedadaServicio.cancelarQuedada(quedadaId).then(() => {
-      console.log('La quedada ha sido cancelada');
-      this.notificacionesServicio.mostrarNotificacion(
+    this.quedadaServicio
+      .cancelarQuedada(quedadaId)
+      .then(() => {
+        console.log('La quedada ha sido cancelada');
+        this.notificacionesServicio.mostrarNotificacion(
           'Quedada cancelada',
           'La quedada ha sido cancelada correctamente',
           'success'
-      );
-  }).catch((error) => {
-      console.error('Error al cancelar la quedada:', error);
-      this.notificacionesServicio.mostrarNotificacion(
+        );
+        setTimeout(() => {
+          window.location.reload();
+        }, 2500);
+      })
+      .catch((error) => {
+        console.error('Error al cancelar la quedada:', error);
+        this.notificacionesServicio.mostrarNotificacion(
           'Error al cancelar la quedada',
           'Ha ocurrido un error al cancelar la quedada. Por favor, inténtalo de nuevo más tarde',
           'error'
-      );
-  });
-
+        );
+      });
   }
 
   unirseQuedada() {
@@ -162,7 +171,9 @@ export class DetalleQuedadaComponent {
     this.usuarioServicio
       .actualizarUsuario(this.usuarioActual!)
       .then(() => {
-        console.log('Se ha actualizado el usuario después de cancelar la asistencia a la quedada');
+        console.log(
+          'Se ha actualizado el usuario después de cancelar la asistencia a la quedada'
+        );
 
         // Se llama al servicio para cancelar la asistencia a la quedada
         this.quedadaServicio
@@ -192,6 +203,50 @@ export class DetalleQuedadaComponent {
         this.notificacionesServicio.mostrarNotificacion(
           'Error',
           'Ha ocurrido un error al actualizar el usuario',
+          'error'
+        );
+      });
+  }
+
+  marcarComoCompletada(quedadaId: string, fechaQuedada: Date) {
+
+    const fechaActual = new Date();
+    const fechaQuedadaDate = new Date(fechaQuedada);
+
+    // Verifica si la fecha actual es posterior a la fecha de la quedada
+    if (this.quedada?.fechaHora && fechaActual <= fechaQuedadaDate) {
+      console.log(
+        'La fecha de la quedada no ha pasado aún',
+        this.quedada?.fechaHora,
+        fechaActual
+      );
+      // Muestra un mensaje indicando que la fecha de la quedada no ha pasado y no se puede marcar como completada
+      this.notificacionesServicio.mostrarNotificacion(
+        'No puede marcar la quedada como completada',
+        'La fecha de la quedada no ha pasado. En este caso solo tienes la opción de cancelar la quedada',
+        'info'
+      );
+      return; // Sale del método y no permite completar a la quedada
+    }
+
+    // Si llega a este punto quiere decir que la fecha de la quedada ha pasado y se puede marcar como completada
+    this.quedadaServicio
+      .marcarQuedadaComoCompletada(quedadaId)
+      .then(() => {
+        this.notificacionesServicio.mostrarNotificacion(
+          'Quedada marcada como completada',
+          'El estado de la quedada ha sido actualizado',
+          'success'
+        );
+        setTimeout(() => {
+          window.location.reload();
+        }, 2500);
+      })
+      .catch((error) => {
+        console.error('Error al marcar la quedada como completada:', error);
+        this.notificacionesServicio.mostrarNotificacion(
+          'Error al marcar la quedada como completada',
+          'No se ha podido actualizar el estado de la quedada a completada',
           'error'
         );
       });

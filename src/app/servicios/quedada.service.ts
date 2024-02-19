@@ -80,15 +80,45 @@ export class QuedadaService {
           quedada.estado = 'Cancelada';
 
           // Se actualiza la quedada en firebase
-          this.baseDatosServicio.actualizar('quedadas', quedada).then(() => {
-            resolve();
-          }).catch(error => {
-            reject(error);
-          });
+          this.baseDatosServicio
+            .actualizar('quedadas', quedada)
+            .then(() => {
+              resolve();
+            })
+            .catch((error) => {
+              reject(error);
+            });
         },
         error: (error) => {
           reject(error);
-        }
+        },
+      });
+    });
+  }
+
+  marcarQuedadaComoCompletada(quedadaId: string): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      this.obtenerQuedada(quedadaId).subscribe({
+        next: (quedada: Quedada) => {
+          if (!quedada) {
+            reject(new Error('La quedada no existe'));
+            return;
+          }
+          // Cambia el estado de la quedada a "Completada"
+          quedada.estado = 'Completada';
+          // Actualiza la quedada en la base de datos
+          this.baseDatosServicio
+            .actualizar('quedadas', quedada)
+            .then(() => {
+              resolve();
+            })
+            .catch((error) => {
+              reject(error);
+            });
+        },
+        error: (error) => {
+          reject(error);
+        },
       });
     });
   }
